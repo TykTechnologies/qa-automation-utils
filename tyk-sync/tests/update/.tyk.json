@@ -7,14 +7,6 @@
     }
   ],
   "policies": [
-    {
-      "file": "policy-5f77134111ca1c3482c6c5bf.json"
-    },
-    {
-      "file": "policy-5f85cd8d11ca1c666a7e7abb.json"
-    },
-    {
-      "file": "policy-5f86b74d11ca1c666a7e7abe.json"
-    }
+
   ]
 }

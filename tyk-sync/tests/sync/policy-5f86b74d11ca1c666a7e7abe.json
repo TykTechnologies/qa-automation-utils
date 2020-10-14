@@ -8,16 +8,7 @@
   "throttle_retry_limit": 5,
   "quota_max": -1,
   "quota_renewal_rate": -1,
-  "access_rights": {
-    "ad88ea204afd42f769aaf38fd3757de0": {
-      "api_name": "versions",
-      "api_id": "ad88ea204afd42f769aaf38fd3757de0",
-      "versions": [
-        "v2"
-      ],
-      "allowed_urls": []
-    }
-  },
+  "access_rights": {},
   "hmac_enabled": false,
   "active": true,
   "name": "versions-policy",

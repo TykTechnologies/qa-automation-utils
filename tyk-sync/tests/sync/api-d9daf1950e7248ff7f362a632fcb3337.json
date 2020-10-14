@@ -370,7 +370,9 @@
   "domain": "",
   "certificates": [],
   "do_not_track": false,
-  "tags": [],
+  "tags": [
+    "qa"
+  ],
   "enable_context_vars": false,
   "config_data": {},
   "tag_headers": [],
