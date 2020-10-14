@@ -1,0 +1,14 @@
+{
+  "type": "apidef",
+  "files": [
+    {
+      "file": "api-d39d36a3324840707ceeb0e5998b0c11.json",
+      "oas": {}
+    }
+  ],
+  "policies": [
+    {
+      "file": "policy-5f85ce2611ca1c666a7e7abc.json"
+    }
+  ]
+}

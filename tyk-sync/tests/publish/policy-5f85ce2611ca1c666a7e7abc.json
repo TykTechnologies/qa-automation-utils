@@ -1,0 +1,36 @@
+{
+  "_id": "5f85ce2611ca1c666a7e7abc",
+  "id": "5f85ce2611ca1c666a7e7abc",
+  "org_id": "5f33e25d11ca1c1aa7a6ff09",
+  "rate": -1,
+  "per": -1,
+  "throttle_interval": 5,
+  "throttle_retry_limit": 5,
+  "quota_max": -1,
+  "quota_renewal_rate": -1,
+  "access_rights": {
+    "d39d36a3324840707ceeb0e5998b0c11": {
+      "api_name": "versions",
+      "api_id": "d39d36a3324840707ceeb0e5998b0c11",
+      "versions": [
+        "v2"
+      ],
+      "allowed_urls": []
+    }
+  },
+  "hmac_enabled": false,
+  "active": true,
+  "name": "versions-policy",
+  "is_inactive": false,
+  "date_created": "2020-10-13T17:56:22.813+02:00",
+  "tags": [],
+  "key_expires_in": 604800,
+  "partitions": {
+    "quota": true,
+    "rate_limit": true,
+    "acl": true,
+    "per_api": false
+  },
+  "last_updated": "1602604582",
+  "meta_data": {}
+}
