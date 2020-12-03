@@ -1,0 +1,36 @@
+{
+  "_id": "5f85cd8d11ca1c666a7e7abb",
+  "id": "5f85cd8d11ca1c666a7e7abb",
+  "org_id": "5f33e25d11ca1c1aa7a6ff09",
+  "rate": 200,
+  "per": 20,
+  "throttle_interval": -1,
+  "throttle_retry_limit": -1,
+  "quota_max": -1,
+  "quota_renewal_rate": -1,
+  "access_rights": {
+    "4678aa7cde134ec856eef83bfdd8ac0e": {
+      "api_name": "uptime-test",
+      "api_id": "4678aa7cde134ec856eef83bfdd8ac0e",
+      "versions": [
+        "Default"
+      ],
+      "allowed_urls": []
+    }
+  },
+  "hmac_enabled": false,
+  "active": true,
+  "name": "uptime-policy",
+  "is_inactive": false,
+  "date_created": "2020-10-13T17:53:49.575+02:00",
+  "tags": [],
+  "key_expires_in": 0,
+  "partitions": {
+    "quota": true,
+    "rate_limit": true,
+    "acl": true,
+    "per_api": false
+  },
+  "last_updated": "1602604429",
+  "meta_data": {}
+}
