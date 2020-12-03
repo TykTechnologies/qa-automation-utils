@@ -10,7 +10,7 @@
       "oas": {}
     },
     {
-      "file": "api-d9daf1950e7248ff7f362a632fcb3337.json",
+      "file": "api-bdf0930c7cec4acb575eec8c56fa3c38.json",
       "oas": {}
     }
   ],
@@ -20,9 +20,6 @@
     },
     {
       "file": "policy-5f85cd8d11ca1c666a7e7abb.json"
-    },
-    {
-      "file": "policy-5f86b74d11ca1c666a7e7abe.json"
     }
   ]
 }
