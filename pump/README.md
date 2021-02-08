@@ -21,3 +21,6 @@ this will spin-up dockers with:
 * ElasticSearch (on port 9200)
 * Kafka with zookeeper
 * UI for Kafka (on port 9000)
+
+## Executing tests
+Please follow instructions on [TestPad](https://tykio.ontestpad.com/script/21#//)
