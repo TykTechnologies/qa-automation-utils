@@ -1,7 +1,7 @@
 # PUMP TEST UTILS
 
 ## Pump config file
-Please copy [pump-auto.conf](./pump-auto.conf) file into you Pump folder and reboot Pump.
+Please copy [pump-auto.conf](./pump-auto.conf) file into your Pump folder and reboot Pump.
 Configured pumps:
 * mongo-pump-aggregate
 * mongo
