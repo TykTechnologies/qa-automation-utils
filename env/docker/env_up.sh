@@ -1,0 +1,1 @@
+docker-compose --env-file .env -f testing_env.yml up
