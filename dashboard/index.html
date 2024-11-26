@@ -1,0 +1,107 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GitHub Actions Dashboard</title>
+    <style>
+        /* ... existing styles ... */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+        /* Style for failed jobs */
+        tr.failed {
+            background-color: #f8d7da;
+        }
+        tr.failed td {
+            color: #721c24;
+        }
+        /* Style for skipped jobs */
+        tr.skipped {
+            background-color: #e2e3e5;
+        }
+        tr.skipped td {
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <h1>GitHub Actions Dashboard</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Job Name</th>
+                <th>Status</th>
+                <th>Conclusion</th>
+                <th>Started At</th>
+                <th>Completed At</th>
+                <!-- Removed Branch Column -->
+            </tr>
+        </thead>
+        <tbody id="results"></tbody>
+    </table>
+    <script>
+        async function fetchData() {
+            const response = await fetch('data.json'); // Ensure this path is correct
+            const data = await response.json();
+            const results = document.getElementById('results');
+
+            // Group data by repository and branch
+            const groupedData = {};
+            data.forEach(job => {
+                const repo = job.repo_name;
+                const branch = job.head_branch;
+
+                if (!groupedData[repo]) {
+                    groupedData[repo] = {};
+                }
+                if (!groupedData[repo][branch]) {
+                    groupedData[repo][branch] = [];
+                }
+                groupedData[repo][branch].push(job);
+            });
+
+            for (const repo in groupedData) {
+                // Add repository name row
+                const repoRow = document.createElement('tr');
+                repoRow.innerHTML = `<td colspan="5"><h2>${repo}</h2></td>`;
+                results.appendChild(repoRow);
+
+                for (const branch in groupedData[repo]) {
+                    // Add branch name row
+                    const branchRow = document.createElement('tr');
+                    branchRow.innerHTML = `<td colspan="5"><strong>${branch}</strong></td>`;
+                    results.appendChild(branchRow);
+
+                    groupedData[repo][branch].forEach(job => {
+                        const row = document.createElement('tr');
+
+                        if (job.conclusion === 'failure') {
+                            row.classList.add('failed');
+                        } else if (job.conclusion === 'skipped') {
+                            row.classList.add('skipped');
+                        }
+
+                        row.innerHTML = `
+                            <td>${job.name}</td>
+                            <td>${job.status}</td>
+                            <td>${job.conclusion}</td>
+                            <td>${job.started_at}</td>
+                            <td>${job.completed_at}</td>
+                        `;
+                        results.appendChild(row);
+                    });
+                }
+            }
+        }
+
+        fetchData();
+    </script>
+</body>
+</html>
