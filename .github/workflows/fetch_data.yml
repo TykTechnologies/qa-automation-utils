@@ -2,7 +2,10 @@ name: Fetch and Save Data
 
 on:
   schedule:
-    - cron: '*/5 * * * *' # Every 5 minutes
+    - cron: '0 8 * * 1-5' # Every weekday at 8am
+  push:
+    branches:
+      - main
 
 jobs:
   fetch_data:
