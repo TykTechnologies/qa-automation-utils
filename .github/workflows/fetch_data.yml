@@ -28,7 +28,7 @@ jobs:
 
       - name: Fetch and save data
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         run: node fetchAndSaveData.js
 
       - name: Commit and push changes
