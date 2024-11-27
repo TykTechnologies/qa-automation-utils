@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>GitHub Actions Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* ... existing styles ... */
         table {
@@ -33,53 +34,62 @@
 </head>
 <body>
     <h1>GitHub Actions Dashboard</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Job Name</th>
-                <th>Status</th>
-                <th>Conclusion</th>
-                <th>Started At</th>
-                <th>Completed At</th>
-                <!-- Removed Branch Column -->
-            </tr>
-        </thead>
-        <tbody id="results"></tbody>
-    </table>
+    <p>Last updated at: <span id="lastUpdated"></span></p>
+    <div id="repository-tables"></div>
     <script>
         async function fetchData() {
-            const response = await fetch('data.json'); // Ensure this path is correct
-            const data = await response.json();
-            const results = document.getElementById('results');
+            const response = await fetch('data.json');
+            const result = await response.json();
+            const data = result.data;
+            const lastExecutionTime = new Date(result.lastExecutionTime).toLocaleString();
 
-            // Group data by repository and branch
-            const groupedData = {};
-            data.forEach(job => {
-                const repo = job.repo_name;
-                const branch = job.head_branch;
+            const repositoryTables = document.getElementById('repository-tables');
+            const lastUpdated = document.getElementById('lastUpdated');
 
-                if (!groupedData[repo]) {
-                    groupedData[repo] = {};
+            // Display last execution time from data.json
+            lastUpdated.textContent = lastExecutionTime;
+
+            // Group data by repository
+            const repos = {};
+            data.forEach(entry => {
+                const repoName = entry.repoName;
+                if (!repos[repoName]) {
+                    repos[repoName] = [];
                 }
-                if (!groupedData[repo][branch]) {
-                    groupedData[repo][branch] = [];
-                }
-                groupedData[repo][branch].push(job);
+                repos[repoName].push(entry);
             });
 
-            for (const repo in groupedData) {
-                // Add repository name row
-                const repoRow = document.createElement('tr');
-                repoRow.innerHTML = `<td colspan="5"><h2>${repo}</h2></td>`;
-                results.appendChild(repoRow);
+            // Build sections per repository
+            for (const repoName in repos) {
+                const repoData = repos[repoName];
 
-                for (const branch in groupedData[repo]) {
-                    // Add branch name row
-                    const branchRow = document.createElement('tr');
-                    branchRow.innerHTML = `<td colspan="5"><strong>${branch}</strong></td>`;
-                    results.appendChild(branchRow);
+                const repoHeader = document.createElement('h2');
+                repoHeader.textContent = repoName;
+                repositoryTables.appendChild(repoHeader);
 
-                    groupedData[repo][branch].forEach(job => {
+                // Group data by branch within the repository
+                repoData.forEach(entry => {
+                    const branchHeader = document.createElement('h3');
+                    branchHeader.textContent = `Branch: ${entry.branch}`;
+                    repositoryTables.appendChild(branchHeader);
+
+                    const table = document.createElement('table');
+                    table.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Job Name</th>
+                                <th>Status</th>
+                                <th>Conclusion</th>
+                                <th>Started At</th>
+                                <th>Duration (minutes)</th>
+                                <th>Execution Link</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    `;
+                    const tbody = table.querySelector('tbody');
+
+                    entry.jobs.forEach(job => {
                         const row = document.createElement('tr');
 
                         if (job.conclusion === 'failure') {
@@ -92,12 +102,15 @@
                             <td>${job.name}</td>
                             <td>${job.status}</td>
                             <td>${job.conclusion}</td>
-                            <td>${job.started_at}</td>
-                            <td>${job.completed_at}</td>
+                            <td>${new Date(job.started_at).toLocaleString()}</td>
+                            <td>${(job.duration / 60000).toFixed(2)}</td>
+                            <td><a href="${job.url}" target="_blank">View Execution</a></td>
                         `;
-                        results.appendChild(row);
+                        tbody.appendChild(row);
                     });
-                }
+
+                    repositoryTables.appendChild(table);
+                });
             }
         }
 

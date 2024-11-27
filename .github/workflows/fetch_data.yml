@@ -5,7 +5,8 @@ on:
     - cron: '0 8 * * 1-5' # Every weekday at 8am
   push:
     branches:
-      - main
+      - master
+  workflow_dispatch:
 
 jobs:
   fetch_data:
