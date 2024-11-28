@@ -1,5 +1,5 @@
 {
-  "lastExecutionTime": "2024-11-27T15:41:43.733Z",
+  "lastExecutionTime": "2024-11-28T08:02:00.568Z",
   "data": [
     {
       "repoName": "tyk-analytics",
@@ -106,68 +106,68 @@
       "branch": "release-5.7.0",
       "jobs": [
         {
-          "id": 33377005696,
-          "name": "api-tests (redis6, postgres15, murmur128, not local and not dind and not sql, master, tykio/tyk-p...",
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2024-11-22T11:25:02Z",
-          "duration": 846000,
-          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/11971510409/job/33377005696",
-          "head_branch": "release-5.7.0",
-          "repo_name": "tyk-analytics"
-        },
-        {
-          "id": 33377005967,
-          "name": "api-tests (redis6, postgres15, murmur128, not local and not dind and not sql, master, $ECR/tyk-pu...",
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2024-11-22T11:26:11Z",
-          "duration": 852000,
-          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/11971510409/job/33377005967",
-          "head_branch": "release-5.7.0",
-          "repo_name": "tyk-analytics"
-        },
-        {
-          "id": 33377006230,
-          "name": "api-tests (redis7, mongo7, sha256, not local and not dind, master, tykio/tyk-pump-docker-pub:v1.8...",
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2024-11-22T11:26:21Z",
-          "duration": 885000,
-          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/11971510409/job/33377006230",
-          "head_branch": "release-5.7.0",
-          "repo_name": "tyk-analytics"
-        },
-        {
-          "id": 33377006770,
-          "name": "api-tests (redis7, mongo7, sha256, not local and not dind, master, $ECR/tyk-pump:master, $ECR/tyk...",
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2024-11-22T11:27:08Z",
-          "duration": 887000,
-          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/11971510409/job/33377006770",
-          "head_branch": "release-5.7.0",
-          "repo_name": "tyk-analytics"
-        },
-        {
-          "id": 33377007083,
+          "id": 33617339675,
           "name": "ui-tests (redis7, mongo7, sha256, not local and not dind, master, tykio/tyk-pump-docker-pub:v1.8,...",
           "status": "completed",
           "conclusion": "success",
-          "started_at": "2024-11-22T11:26:29Z",
-          "duration": 639000,
-          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/11971510409/job/33377007083",
+          "started_at": "2024-11-27T18:05:10Z",
+          "duration": 670000,
+          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/12055750736/job/33617339675",
           "head_branch": "release-5.7.0",
           "repo_name": "tyk-analytics"
         },
         {
-          "id": 33377007292,
+          "id": 33617339974,
           "name": "ui-tests (redis7, mongo7, sha256, not local and not dind, master, $ECR/tyk-pump:master, $ECR/tyk-...",
           "status": "completed",
           "conclusion": "success",
-          "started_at": "2024-11-22T11:26:23Z",
-          "duration": 617000,
-          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/11971510409/job/33377007292",
+          "started_at": "2024-11-27T18:05:10Z",
+          "duration": 645000,
+          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/12055750736/job/33617339974",
+          "head_branch": "release-5.7.0",
+          "repo_name": "tyk-analytics"
+        },
+        {
+          "id": 33617340296,
+          "name": "api-tests (redis6, postgres15, murmur128, not local and not dind and not sql, master, tykio/tyk-p...",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2024-11-27T18:06:25Z",
+          "duration": 884000,
+          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/12055750736/job/33617340296",
+          "head_branch": "release-5.7.0",
+          "repo_name": "tyk-analytics"
+        },
+        {
+          "id": 33617341325,
+          "name": "api-tests (redis6, postgres15, murmur128, not local and not dind and not sql, master, $ECR/tyk-pu...",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2024-11-27T18:06:26Z",
+          "duration": 879000,
+          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/12055750736/job/33617341325",
+          "head_branch": "release-5.7.0",
+          "repo_name": "tyk-analytics"
+        },
+        {
+          "id": 33617341732,
+          "name": "api-tests (redis7, mongo7, sha256, not local and not dind, master, tykio/tyk-pump-docker-pub:v1.8...",
+          "status": "completed",
+          "conclusion": "failure",
+          "started_at": "2024-11-27T18:06:31Z",
+          "duration": 871000,
+          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/12055750736/job/33617341732",
+          "head_branch": "release-5.7.0",
+          "repo_name": "tyk-analytics"
+        },
+        {
+          "id": 33617342053,
+          "name": "api-tests (redis7, mongo7, sha256, not local and not dind, master, $ECR/tyk-pump:master, $ECR/tyk...",
+          "status": "completed",
+          "conclusion": "success",
+          "started_at": "2024-11-27T18:06:27Z",
+          "duration": 890000,
+          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/12055750736/job/33617342053",
           "head_branch": "release-5.7.0",
           "repo_name": "tyk-analytics"
         }
