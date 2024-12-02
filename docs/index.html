@@ -6,35 +6,100 @@
     <title>GitHub Actions Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* ... existing styles ... */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            margin: 0;
+        }
+        h2 {
+            font-size: 1.5em;
+            margin-top: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+        }
+        h3 {
+            font-size: 1.2em;
+            margin-top: 15px;
+        }
+        h4 {
+            font-size: 1em;
+            margin-top: 10px;
+        }
+        p {
+            text-align: center;
+            font-size: 1em;
+            margin: 10px 0;
+        }
+        #repository-tables {
+            padding: 20px;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         th, td {
-            border: 1px solid black;
+            border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
-        /* Style for failed jobs */
+        th {
+            background-color: #f2f2f2;
+        }
         tr.failed {
             background-color: #f8d7da;
         }
         tr.failed td {
             color: #721c24;
         }
-        /* Style for skipped jobs */
         tr.skipped {
             background-color: #e2e3e5;
         }
         tr.skipped td {
             color: #6c757d;
         }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .statistics {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .failed-executions {
+            margin: 20px;
+        }
+        .failed-executions h3 {
+            color: #721c24;
+        }
     </style>
 </head>
 <body>
     <h1>GitHub Actions Dashboard</h1>
     <p>Last updated at: <span id="lastUpdated"></span></p>
+    <div class="statistics">
+        <p>Total Jobs: <span id="totalJobs"></span></p>
+        <p>Passed Jobs: <span id="passedJobs"></span></p>
+        <p>Skipped Jobs: <span id="skippedJobs"></span></p>
+        <p>Failed Jobs: <span id="failedJobs"></span></p>
+    </div>
+    <div class="failed-executions">
+        <h3>Failed Executions</h3>
+        <ul id="failedExecutionsList"></ul>
+    </div>
     <div id="repository-tables"></div>
     <script>
         async function fetchData() {
@@ -45,9 +110,19 @@
 
             const repositoryTables = document.getElementById('repository-tables');
             const lastUpdated = document.getElementById('lastUpdated');
+            const totalJobsElement = document.getElementById('totalJobs');
+            const passedJobsElement = document.getElementById('passedJobs');
+            const skippedJobsElement = document.getElementById('skippedJobs');
+            const failedJobsElement = document.getElementById('failedJobs');
+            const failedExecutionsList = document.getElementById('failedExecutionsList');
 
             // Display last execution time from data.json
             lastUpdated.textContent = lastExecutionTime;
+
+            let totalJobs = 0;
+            let passedJobs = 0;
+            let skippedJobs = 0;
+            let failedJobs = 0;
 
             // Group data by repository
             const repos = {};
@@ -57,7 +132,27 @@
                     repos[repoName] = [];
                 }
                 repos[repoName].push(entry);
+
+                entry.jobs.forEach(job => {
+                    totalJobs++;
+                    if (job.conclusion === 'success') {
+                        passedJobs++;
+                    } else if (job.conclusion === 'skipped') {
+                        skippedJobs++;
+                    } else if (job.conclusion === 'failure') {
+                        failedJobs++;
+                        const listItem = document.createElement('li');
+                        listItem.innerHTML = `${job.repo_name} (${job.head_branch}): <a href="${job.url}" target="_blank">${job.name}</a>`;
+                        failedExecutionsList.appendChild(listItem);
+                    }
+                });
             });
+
+            // Update statistics
+            totalJobsElement.textContent = totalJobs;
+            passedJobsElement.textContent = passedJobs;
+            skippedJobsElement.textContent = skippedJobs;
+            failedJobsElement.textContent = failedJobs;
 
             // Build sections per repository
             for (const repoName in repos) {
@@ -73,43 +168,59 @@
                     branchHeader.textContent = `Branch: ${entry.branch}`;
                     repositoryTables.appendChild(branchHeader);
 
-                    const table = document.createElement('table');
-                    table.innerHTML = `
-                        <thead>
-                            <tr>
-                                <th>Job Name</th>
-                                <th>Status</th>
-                                <th>Conclusion</th>
-                                <th>Started At</th>
-                                <th>Duration (minutes)</th>
-                                <th>Execution Link</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    `;
-                    const tbody = table.querySelector('tbody');
-
+                    // Group data by workflow file within the branch
+                    const workflows = {};
                     entry.jobs.forEach(job => {
-                        const row = document.createElement('tr');
-
-                        if (job.conclusion === 'failure') {
-                            row.classList.add('failed');
-                        } else if (job.conclusion === 'skipped') {
-                            row.classList.add('skipped');
+                        const workflowFile = job.workflow_file;
+                        if (!workflows[workflowFile]) {
+                            workflows[workflowFile] = [];
                         }
-
-                        row.innerHTML = `
-                            <td>${job.name}</td>
-                            <td>${job.status}</td>
-                            <td>${job.conclusion}</td>
-                            <td>${new Date(job.started_at).toLocaleString()}</td>
-                            <td>${(job.duration / 60000).toFixed(2)}</td>
-                            <td><a href="${job.url}" target="_blank">View Execution</a></td>
-                        `;
-                        tbody.appendChild(row);
+                        workflows[workflowFile].push(job);
                     });
 
-                    repositoryTables.appendChild(table);
+                    for (const workflowFile in workflows) {
+                        const workflowHeader = document.createElement('h4');
+                        workflowHeader.textContent = `Workflow: ${workflowFile}`;
+                        repositoryTables.appendChild(workflowHeader);
+
+                        const table = document.createElement('table');
+                        table.innerHTML = `
+                            <thead>
+                                <tr>
+                                    <th>Job Name</th>
+                                    <th>Status</th>
+                                    <th>Conclusion</th>
+                                    <th>Started At</th>
+                                    <th>Duration (minutes)</th>
+                                    <th>Execution Link</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        `;
+                        const tbody = table.querySelector('tbody');
+
+                        workflows[workflowFile].forEach(job => {
+                            const row = document.createElement('tr');
+
+                            if (job.conclusion === 'failure') {
+                                row.classList.add('failed');
+                            } else if (job.conclusion === 'skipped') {
+                                row.classList.add('skipped');
+                            }
+
+                            row.innerHTML = `
+                                <td>${job.name}</td>
+                                <td>${job.status}</td>
+                                <td>${job.conclusion}</td>
+                                <td>${new Date(job.started_at).toLocaleString()}</td>
+                                <td>${(job.duration / 60000).toFixed(2)}</td>
+                                <td><a href="${job.url}" target="_blank">View Execution</a></td>
+                            `;
+                            tbody.appendChild(row);
+                        });
+
+                        repositoryTables.appendChild(table);
+                    }
                 });
             }
         }

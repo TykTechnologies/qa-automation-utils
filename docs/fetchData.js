@@ -2,20 +2,15 @@ require('dotenv').config();
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
 const REPO_OWNER = 'TykTechnologies';
-const COMBINATIONS = {
-    "tyk-analytics": {"branches": ["master", "release-5.7", "release-5.7.0", "release-5-lts"], "jobs": ["api-tests", "ui-tests"]},
-    "tyk": {"branches": ["master", "release-5.7", "release-5.7.0", "release-5-lts"], "jobs": ["api-tests"]},
-    "tyk-sink": {"branches": ["master"], "jobs": ["api-tests"]},
-    "tyk-pump": {"branches": ["master"], "jobs": ["api-tests"]},
-};
+const COMBINATIONS = require('./combinations.json');
 const WORKFLOW_FILE = 'release.yml';
 const API_JOB_NAME_PREFIX = 'api-tests';
 const UI_JOB_NAME_PREFIX = 'ui-tests';
 
-async function fetchWorkflowRuns(repoName, branch) {
+async function fetchWorkflowRuns(repoName, branch, workflowFile) {
     const fetch = (await import('node-fetch')).default;
-    const url = `https://api.github.com/repos/${REPO_OWNER}/${repoName}/actions/workflows/${WORKFLOW_FILE}/runs?branch=${branch}&per_page=1`;
-    console.log(`Fetching workflow runs for ${repoName} and branch ${branch}...`);
+    const url = `https://api.github.com/repos/${REPO_OWNER}/${repoName}/actions/workflows/${workflowFile}/runs?branch=${branch}&per_page=1`;
+    console.log(`Fetching workflow runs for ${repoName}/${workflowFile} and branch ${branch}...`);
     try {
         const response = await fetch(url, {
             headers: {
@@ -48,7 +43,10 @@ async function fetchJobDetails(repoName, runId, jobNames) {
             throw new Error(`Error fetching job details: ${response.statusText}`);
         }
         const data = await response.json();
-        return data.jobs.filter(job => job.name.startsWith(API_JOB_NAME_PREFIX) || job.name.startsWith(UI_JOB_NAME_PREFIX)).map(job => ({
+        return data.jobs.filter(job => 
+            // Check if any job name in jobNames is included in job.name
+            jobNames.some(name => job.name.includes(name))
+        ).map(job => ({
             id: job.id,
             name: job.name,
             status: job.status,
@@ -68,16 +66,20 @@ async function fetchData() {
     for (const repoName in COMBINATIONS) {
         const repoConfig = COMBINATIONS[repoName];
         const branches = repoConfig.branches;
+        const fileNames = repoConfig.fileNames;
         for (const branch of branches) {
-            const workflowRuns = await fetchWorkflowRuns(repoName, branch);
-            for (const run of workflowRuns) {
-                const jobs = await fetchJobDetails(repoName, run.id, repoConfig.jobs);
-                const jobsWithInfo = jobs.map(job => ({
-                    ...job,
-                    head_branch: run.head_branch,
-                    repo_name: repoName
-                }));
-                results.push(...jobsWithInfo);
+            for (const workflowFile of fileNames) {
+                const workflowRuns = await fetchWorkflowRuns(repoName, branch, workflowFile);
+                for (const run of workflowRuns) {
+                    const jobs = await fetchJobDetails(repoName, run.id, repoConfig.jobs);
+                    const jobsWithInfo = jobs.map(job => ({
+                        ...job,
+                        head_branch: run.head_branch,
+                        repo_name: repoName,
+                        workflow_file: workflowFile
+                    }));
+                    results.push(...jobsWithInfo);
+                }
             }
         }
     }

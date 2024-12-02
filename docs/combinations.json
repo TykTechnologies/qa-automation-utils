@@ -1,0 +1,67 @@
+{
+    "tyk-analytics": {
+        "fileNames": ["release.yml", "nightly-e2e-tests.yml", "k8s-api-tests.yaml"], 
+        "branches": [
+            "master",
+            "release-5.7",
+            "release-5.7.0",
+            "release-5-lts"
+        ],
+        "jobs": [
+            "api-tests",
+            "ui-tests",
+            "Test-on-cluster"
+        ]
+    },
+    "tyk-analytics-ui": {
+        "fileNames": ["ui-tests.yml"], 
+        "branches": [
+            "master",
+            "release-5.7",
+            "release-5.7.0",
+            "release-5-lts"
+        ],
+        "jobs": [
+            "ui-test"
+        ]
+    },
+    "tyk": {
+        "fileNames": ["release.yml"],
+        "branches": [
+            "master",
+            "release-5.7",
+            "release-5.7.0",
+            "release-5-lts"
+        ],
+        "jobs": [
+            "api-tests"
+        ]
+    },
+    "tyk-sink": {
+        "fileNames": ["release.yml"],
+        "branches": [
+            "master"
+        ],
+        "jobs": [
+            "api-tests"
+        ]
+    },
+    "tyk-pump": {
+        "fileNames": ["release.yml"],
+        "branches": [
+            "master"
+        ],
+        "jobs": [
+            "api-tests"
+        ]
+    },
+    "portal": {
+        "fileNames": ["api_tests.yml", "ui_tests.yml", "ui_tests_postgres.yml", "ui_tests_mysql.yml", "ui_tests_mariadb.yml"],
+        "branches": [
+            "master"
+        ],
+        "jobs": [
+            "test"
+        ]
+    }
+}
