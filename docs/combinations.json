@@ -1,6 +1,6 @@
 {
     "tyk-analytics": {
-        "fileNames": ["release.yml", "nightly-e2e-tests.yml", "k8s-api-tests.yaml"], 
+        "fileNames": ["release.yml", "nightly-e2e-tests.yml", "k8s-api-tests.yaml", "upgrade-tests.yml"], 
         "branches": [
             "master",
             "release-5.7",
