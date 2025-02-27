@@ -31,6 +31,25 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
         run: node fetchAndSaveData.js
 
+      - name: Check for failed jobs
+        id: check_failed_jobs
+        run: |
+          if grep -q '"conclusion": "failure"' data.json; then
+            echo "failed_jobs=true" >> $GITHUB_ENV
+          else
+            echo "failed_jobs=false" >> $GITHUB_ENV
+          fi
+
+      - name: Notify slack
+        if: ${{ env.failed_jobs == 'true' }}
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_TITLE: "There are failing pipelines!"
+          SLACK_USERNAME: Big brother
+          SLACK_MESSAGE: "Please check the pipelines: <https://tyktechnologies.github.io/qa-automation-utils/|link>"
+
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
