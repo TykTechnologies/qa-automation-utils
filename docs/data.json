@@ -1,5 +1,5 @@
 {
-  "lastExecutionTime": "2025-05-27T08:02:20.729Z",
+  "lastExecutionTime": "2025-05-27T09:08:06.671Z",
   "data": [
     {
       "repoName": "tyk-analytics",
@@ -162,25 +162,25 @@
           "workflow_file": "k8s-api-tests.yaml"
         },
         {
-          "id": 42866288890,
-          "name": "api-tests (mongo7)",
+          "id": 42946524018,
+          "name": "api-tests (postgres15)",
           "status": "completed",
           "conclusion": "success",
-          "started_at": "2025-05-26T00:11:34Z",
-          "duration": 129000,
-          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/15243381238/job/42866288890",
+          "started_at": "2025-05-27T08:59:44Z",
+          "duration": 136000,
+          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/15243381238/job/42946524018",
           "head_branch": "master",
           "repo_name": "tyk-analytics",
           "workflow_file": "upgrade-tests.yml"
         },
         {
-          "id": 42866288899,
-          "name": "api-tests (postgres15)",
+          "id": 42946524199,
+          "name": "api-tests (mongo7)",
           "status": "completed",
-          "conclusion": "failure",
-          "started_at": "2025-05-26T00:12:30Z",
-          "duration": 29000,
-          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/15243381238/job/42866288899",
+          "conclusion": "success",
+          "started_at": "2025-05-26T00:11:34Z",
+          "duration": 129000,
+          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/15243381238/job/42946524199",
           "head_branch": "master",
           "repo_name": "tyk-analytics",
           "workflow_file": "upgrade-tests.yml"
