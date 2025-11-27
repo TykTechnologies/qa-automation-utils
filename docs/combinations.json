@@ -12,7 +12,8 @@
         "jobs": [
             "api-tests",
             "ui-tests",
-            "Test-on-cluster"
+            "Test-on-cluster",
+            "k8s-tests"
         ]
     },
     "tyk-analytics-ui": {
