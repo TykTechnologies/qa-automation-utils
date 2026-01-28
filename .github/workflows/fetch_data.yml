@@ -40,9 +40,9 @@ jobs:
             FAILED_COUNT=$(jq '[.data[].jobs[] | select(.conclusion == "failure")] | length' data.json)
             echo "FAILED_COUNT=$FAILED_COUNT" >> $GITHUB_ENV
             
-            # Extract failed jobs information
+            # Extract failed jobs information and prepare for JSON
             echo "FAILED_JOBS_LIST<<EOF" >> $GITHUB_ENV
-            jq -r '.data[].jobs[] | select(.conclusion == "failure") | "• \(.repo_name)/\(.head_branch): \(.name)\n  Failed at: \(.started_at) (Duration: \(.duration/1000)s)\n  <\(.url)|View Job Details>"' data.json >> $GITHUB_ENV
+            jq -r '.data[].jobs[] | select(.conclusion == "failure") | "• \(.repo_name)/\(.head_branch): \(.name)\\nFailed at: \(.started_at) (Duration: \(.duration/1000)s)\\n<\(.url)|View Job Details>"' data.json >> $GITHUB_ENV
             echo "EOF" >> $GITHUB_ENV
           else
             echo "failed_jobs=false" >> $GITHUB_ENV
@@ -52,32 +52,8 @@ jobs:
         if: ${{ env.failed_jobs == 'true' }}
         uses: slackapi/slack-github-action@v1.24.0
         with:
-          payload: |
-            {
-              "blocks": [
-                {
-                  "type": "header",
-                  "text": {
-                    "type": "plain_text",
-                    "text": "⚠️ There are ${{ env.FAILED_COUNT }} failing pipeline jobs!"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Please check the pipelines: <https://tyktechnologies.github.io/qa-automation-utils/|link>"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*Failed Jobs:*\n${{ env.FAILED_JOBS_LIST }}"
-                  }
-                }
-              ]
-            }
+          # Using a simpler approach with a JSON string to avoid formatting issues
+          payload: '{"text":"⚠️ *There are ${{ env.FAILED_COUNT }} failing pipeline jobs!*\n\nPlease check the pipelines: <https://tyktechnologies.github.io/qa-automation-utils/|link>\n\n*Failed Jobs:*\n${{ env.FAILED_JOBS_LIST }}"}'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
