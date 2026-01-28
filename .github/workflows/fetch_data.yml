@@ -46,13 +46,37 @@ jobs:
 
       - name: Notify slack
         if: ${{ env.failed_jobs == 'true' }}
-        uses: rtCamp/action-slack-notify@v2
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": {
+                    "type": "plain_text",
+                    "text": "⚠️ There are failing pipelines!"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "Please check the pipelines: <https://tyktechnologies.github.io/qa-automation-utils/|link>"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Failed Jobs:*\n${{ env.FAILED_JOBS_LIST }}"
+                  }
+                }
+              ]
+            }
         env:
-          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_TITLE: "There are failing pipelines!"
-          SLACK_USERNAME: Big brother
-          SLACK_MESSAGE: "Please check the pipelines: <https://tyktechnologies.github.io/qa-automation-utils/|link>\n\n*Failed Jobs:*\n${{ env.FAILED_JOBS_LIST }}"
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
 
       - name: Commit and push changes
         run: |
