@@ -41,8 +41,8 @@ jobs:
             echo "FAILED_COUNT=$FAILED_COUNT" >> $GITHUB_ENV
             
             # Create a file with the failed jobs list for the Slack message
-            echo "*Failed Jobs:*" > failed_jobs.txt
-            jq -r '.data[].jobs[] | select(.conclusion == "failure") | "• \(.repo_name)/\(.head_branch): \(.name)\n  Failed at: \(.started_at) (Duration: \(.duration/1000)s)\n  <\(.url)|View Job Details>"' data.json >> failed_jobs.txt
+            echo "*Failed Jobs:\n*" > failed_jobs.txt
+            jq -r '.data[].jobs[] | select(.conclusion == "failure") | "\n• \(.repo_name)/\(.head_branch): \(.name)\n  Failed at: \(.started_at) (Duration: \(.duration/1000)s)\n  <\(.url)|View Job Details>"' data.json >> failed_jobs.txt
           else
             echo "failed_jobs=false" >> $GITHUB_ENV
           fi
