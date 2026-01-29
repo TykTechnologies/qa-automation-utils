@@ -61,7 +61,18 @@ jobs:
         with:
           payload: |
             {
-              "text": "⚠️ *There are ${{ env.FAILED_COUNT }} failing pipeline jobs!*\n\nPlease check the pipelines: <https://tyktechnologies.github.io/qa-automation-utils/|link>\n\n${{ steps.slack-message.outputs.message }}"
+              "text": "⚠️ *There are ${{ env.FAILED_COUNT }} failing pipeline jobs!*\n\nPlease check the pipelines: <https://tyktechnologies.github.io/qa-automation-utils/|link>\n\n${{ steps.slack-message.outputs.message }}
+                        \n\n :robot_face: @Oel please use the `gh` tool to collect logs from failed jobs and summarize the issue.
+                        For each failure:
+                        • Quote the relevant error message
+                        • Provide 1-2 sentences with a proposed fix
+                        • Run a separate delegate per project
+                        • If there more than 5 failures, analyze only the top 3 most recent failures
+                        You can assign the issue to the appropriate person by mentioning them with @ in the Slack message:
+                        • Pipeline setup issues → Alienor
+                        • API test script issues → Ilija
+                        • UI test script issues → Laurentiu
+                        • Kubernetes / resilience test issues → Burak"
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
