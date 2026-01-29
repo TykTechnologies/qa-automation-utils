@@ -62,7 +62,7 @@ jobs:
           payload: |
             {
               "text": "⚠️ *There are ${{ env.FAILED_COUNT }} failing pipeline jobs!*\n\nPlease check the pipelines: <https://tyktechnologies.github.io/qa-automation-utils/|link>\n\n${{ steps.slack-message.outputs.message }}
-                        \n\n :robot_face: @Oel please use the `gh` tool to collect logs from failed jobs and summarize the issue.
+                        \n\n :robot_face: @Oel please use the gh tool to collect logs from failed jobs and summarize the issue.
                         For each failure:
                         • Quote the relevant error message
                         • Provide 1-2 sentences with a proposed fix
