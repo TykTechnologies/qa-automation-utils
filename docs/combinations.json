@@ -6,7 +6,8 @@
             "release-5.11",
             "release-5.8",
             "release-5.8.0",
-            "release-5-lts"
+            "release-5-lts",
+            "release-5.3"
         ],
         "jobs": [
             "api-tests",
