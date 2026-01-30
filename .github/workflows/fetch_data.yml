@@ -66,7 +66,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
-          OEL_SLACK_ID: D0ABQ6WTK2R
+          OEL_SLACK_ID: A09T4NQA7R8
           KONRAD_SLACK_ID: U014S8HCX8C
 
       - name: Commit and push changes
