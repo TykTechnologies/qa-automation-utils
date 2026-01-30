@@ -1,5 +1,5 @@
 {
-  "lastExecutionTime": "2026-01-30T10:33:00.505Z",
+  "lastExecutionTime": "2026-01-30T10:40:55.872Z",
   "data": [
     {
       "repoName": "tyk-analytics",
@@ -560,10 +560,10 @@
         {
           "id": 61983610946,
           "name": "api-tests (redis6, postgres15, murmur128, not local and not dind and not sql and not nightly, mas...",
-          "status": "queued",
+          "status": "in_progress",
           "conclusion": null,
-          "started_at": "2026-01-30T10:31:45Z",
-          "duration": -1769769105000,
+          "started_at": "2026-01-30T10:33:00Z",
+          "duration": -1769769180000,
           "url": "https://github.com/TykTechnologies/tyk-sink/actions/runs/21512408388/job/61983610946",
           "head_branch": "master",
           "repo_name": "tyk-sink",
@@ -572,10 +572,10 @@
         {
           "id": 61983610947,
           "name": "api-tests (redis7, mongo7, sha256, not local and not dind and not nightly, master, tykio/tyk-pump...",
-          "status": "queued",
+          "status": "in_progress",
           "conclusion": null,
-          "started_at": "2026-01-30T10:31:45Z",
-          "duration": -1769769105000,
+          "started_at": "2026-01-30T10:32:55Z",
+          "duration": -1769769175000,
           "url": "https://github.com/TykTechnologies/tyk-sink/actions/runs/21512408388/job/61983610947",
           "head_branch": "master",
           "repo_name": "tyk-sink",
