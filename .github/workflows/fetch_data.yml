@@ -61,7 +61,37 @@ jobs:
         with:
           payload: |
             {
-              "text": "⚠️ *There are ${{ env.FAILED_COUNT }} failing pipeline jobs!*\n\nPlease check the pipelines: <https://tyktechnologies.github.io/qa-automation-utils/|link>\n\n${{ steps.slack-message.outputs.message }}\n\n:robot_face: <@${{ env.OEL_SLACK_ID }}> please use the gh tool to collect logs only from failed jobs and summarize the issue. If logs are too big try to obtain only the last lines with error. \nFor each failure:\n• Quote the relevant error message\n• Provide 1-2 sentences with a proposed fix\n• Run a separate delegate per project\n• If there more than 5 failures, analyze only the top 3 most recent failures\nYou can assign the issue to the appropriate person by mentioning them with @userid in the Slack message:\n• Pipeline setup issues → @alienor\n• API test script issues → <@U3PA24R0Q>\n• UI test script issues → @Laurentiu\n• Kubernetes / resilience test issues → @Burak\n"
+              "text": "⚠️ There are ${{ env.FAILED_COUNT }} failing pipeline jobs!",
+              "blocks": [
+                {
+                  "type": "header",
+                  "text": { "type": "plain_text", "text": "⚠️ Pipeline failures detected", "emoji": true }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*There are ${{ env.FAILED_COUNT }} failing pipeline jobs!*\nPlease check the pipelines: <https://tyktechnologies.github.io/qa-automation-utils/|qa-automation-utils>"
+                  }
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "${{ steps.slack-message.outputs.message }}"
+                  }
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":robot_face: <@${{ env.OEL_SLACK_ID }}> please use the gh tool (with --status failure flag) to collect logs only from failed jobs and summarize the issue.\nIf logs are too big, try to obtain only the last lines with error.\n\nFor each failure:\n• Quote the relevant error message\n• Provide 1-2 sentences with a proposed fix\n• Run a separate delegate per project\n• If there are more than 5 failures, analyze only the top 3 most recent failures\n\nIn the answer mark a proper person to act on the issue. To mark a person use <@userid>:\n• Pipeline setup issues → @U02GKE67TQC (Alienor)\n• API test script issues → <@U3PA24R0Q> (Ilija)\n• UI test script issues → @U3QNEPT6K (Laurentiu)\n• Kubernetes / resilience test issues → @U02P6G92FDJ (Burak)"
+                  }
+                }
+              ]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
