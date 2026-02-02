@@ -42,7 +42,7 @@ jobs:
             
             # Create a file with the failed jobs list for the Slack message
             echo "*Failed Jobs:*\n" > failed_jobs.txt
-            jq -r '.data[].jobs[] | select(.conclusion == "failure") | "\n• \(.repo_name)/\(.head_branch): \(.name)\n  Failed at: \(.started_at) (Duration: \(.duration/1000)s)\n  <\(.url)|View Job Details>"' data.json >> failed_jobs.txt
+            jq -r '.data[].jobs[] | select(.conclusion == "failure") | "\n• \(.repo_name)/\(.head_branch): \(.name)\n  Failed at: \(.started_at) (Duration: \(.duration/1000)s)\n  Repository: \(.repo_name), Run ID: \(.run_id)\n  <\(.url)|View Job Details>"' data.json >> failed_jobs.txt
           else
             echo "failed_jobs=false" >> $GITHUB_ENV
           fi
@@ -88,7 +88,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":robot_face: <@${{ env.OEL_SLACK_ID }}> please use the gh tool (with --status failure flag) to collect logs only from failed jobs and summarize the issue.\nIf logs are too big, try to obtain only the last lines with error.\n\nFor each failure:\n• Quote the relevant error message\n• Provide 1-2 sentences with a proposed fix\n• Run a separate delegate per project\n• If there are more than 5 failures, analyze only the top 3 most recent failures\n\nIn the answer mark a proper person to act on the issue. To mark a person use <@userid>:\n• Pipeline setup issues → @U02GKE67TQC (Alienor)\n• API test script issues → <@U3PA24R0Q> (Ilija)\n• UI test script issues → @U3QNEPT6K (Laurentiu)\n• Kubernetes / resilience test issues → @U02P6G92FDJ (Burak)"
+                    "text": ":robot_face: <@${{ env.OEL_SLACK_ID }}> please use the gh tool (with --status failure flag) to collect logs only from failed jobs and summarize the issue.\nIf logs are too big, try to obtain only the last lines with error. If there are issue with tests - check the commits made in last 24h\n\nFor each failure:\n• Quote the relevant error message\n• Provide 1-2 sentences with a proposed fix\n• Run a separate delegate per project\n• If there are more than 5 failures, analyze only the top 3 most recent failures\n\nIn the answer mark a proper person to act on the issue. To mark a person use <@userid>:\n• Pipeline setup issues → @U02GKE67TQC (Alienor)\n• API test script issues → @U3PA24R0Q (Ilija)\n• UI test script issues → @U3QNEPT6K (Laurentiu)\n• Kubernetes / resilience test issues → @U02P6G92FDJ (Burak) / in case of technical issues mark @U01FJRXU8E6 (Konrad)\n• Upgrade test issues → @U3P2L4XNE (Leo)"
                   }
                 }
               ]
