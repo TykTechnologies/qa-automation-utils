@@ -1,30 +1,30 @@
 {
-  "lastExecutionTime": "2026-02-03T13:04:14.215Z",
+  "lastExecutionTime": "2026-02-03T14:12:52.148Z",
   "data": [
     {
       "repoName": "tyk-analytics",
       "branch": "master",
       "jobs": [
         {
-          "id": 62333494464,
+          "id": 62350476871,
           "name": "api-tests (redis6, postgres15, murmur128, not local and not dind and not sql and not nightly, mas...",
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-02-03T11:18:26Z",
-          "duration": 1659000,
-          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/21627453690/job/62333494464",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-02-03T13:55:03Z",
+          "duration": -1770126903000,
+          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/21632358342/job/62350476871",
           "head_branch": "master",
           "repo_name": "tyk-analytics",
           "workflow_file": "release.yml"
         },
         {
-          "id": 62333494494,
+          "id": 62350476872,
           "name": "api-tests (redis7, mongo7, sha256, not local and not dind and not nightly, master, $ECR/tyk-pump:...",
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-02-03T11:18:26Z",
-          "duration": 1671000,
-          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/21627453690/job/62333494494",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-02-03T13:55:02Z",
+          "duration": -1770126902000,
+          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/21632358342/job/62350476872",
           "head_branch": "master",
           "repo_name": "tyk-analytics",
           "workflow_file": "release.yml"
@@ -420,13 +420,13 @@
       "branch": "master",
       "jobs": [
         {
-          "id": 62332910325,
-          "name": "api-tests (redis7, mongo7, sha256, not local and not dind and not nightly, master, $ECR/tyk-pump:...",
-          "status": "completed",
-          "conclusion": "success",
-          "started_at": "2026-02-03T11:12:54Z",
-          "duration": 1661000,
-          "url": "https://github.com/TykTechnologies/tyk/actions/runs/21627401728/job/62332910325",
+          "id": 62351155800,
+          "name": "api-tests (redis6, postgres15, murmur128, not local and not dind and not sql and not nightly, mas...",
+          "status": "in_progress",
+          "conclusion": null,
+          "started_at": "2026-02-03T14:00:26Z",
+          "duration": -1770127226000,
+          "url": "https://github.com/TykTechnologies/tyk/actions/runs/21632300657/job/62351155800",
           "head_branch": "master",
           "repo_name": "tyk",
           "workflow_file": "release.yml"
@@ -546,13 +546,13 @@
       "branch": "master",
       "jobs": [
         {
-          "id": 62331998713,
+          "id": 62349183941,
           "name": "api-tests",
           "status": "completed",
           "conclusion": "skipped",
-          "started_at": "2026-02-03T11:04:03Z",
+          "started_at": "2026-02-03T13:44:28Z",
           "duration": 0,
-          "url": "https://github.com/TykTechnologies/tyk-sink/actions/runs/21627464274/job/62331998713",
+          "url": "https://github.com/TykTechnologies/tyk-sink/actions/runs/21632374071/job/62349183941",
           "head_branch": "master",
           "repo_name": "tyk-sink",
           "workflow_file": "release.yml"
