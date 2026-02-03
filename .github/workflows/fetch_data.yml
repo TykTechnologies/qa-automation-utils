@@ -79,13 +79,12 @@ jobs:
                   "type": "divider"
                 },
                 {
-                    "type": "text",
-                    "text": ""⚠️ There are ${{ env.FAILED_COUNT }} failing pipeline jobs!",
-                    "emoji": true
-                },
-                {
                   "type": "header",
-                  "text": { "type": "plain_text", "text": "⚠️ Pipeline failures detected", "emoji": true }
+                  "text": {
+                    "type": "plain_text",
+                    "text": "⚠️ Pipeline failures detected",
+                    "emoji": true
+                  }
                 },
                 {
                   "type": "section",
@@ -103,8 +102,7 @@ jobs:
                 },
                 {
                   "type": "divider"
-                },
-                
+                }
               ]
             }
         env:
