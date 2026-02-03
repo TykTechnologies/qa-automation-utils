@@ -43,6 +43,12 @@ jobs:
             # Create a file with the failed jobs list for the Slack message
             echo "*Failed Jobs:*\n" > failed_jobs.txt
             jq -r '.data[].jobs[] | select(.conclusion == "failure") | "\n• \(.repo_name)/\(.head_branch): \(.name)\n  Repository: \(.repo_name)\n  Job ID: \(.id)\n  Failed at: \(.started_at) (Duration: \(.duration/1000)s)\n  URL: \(.url)\n  <\(.url)|View Job Details>"' data.json >> failed_jobs.txt
+            
+            # Create a separate file with just the repository and job ID information for OEL
+            echo "Failed Jobs Summary:\n" > failed_jobs_summary.txt
+            jq -r '.data[].jobs[] | select(.conclusion == "failure") | "• Repository: \(.repo_name), Job ID: \(.id)"' data.json >> failed_jobs_summary.txt
+            FAILED_JOBS_SUMMARY=$(cat failed_jobs_summary.txt | tr '\n' ' ' | sed 's/  / \\n /g')
+            echo "failed_jobs_summary=$FAILED_JOBS_SUMMARY" >> $GITHUB_ENV
           else
             echo "failed_jobs=false" >> $GITHUB_ENV
           fi
@@ -88,7 +94,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":robot_face: <@${{ env.OEL_SLACK_ID }}> Investigate the failures.\n Job ID and Repository for every failure are provided above. Make sure to notify proper assignees."
+                    "text": ":robot_face: <@${{ env.OEL_SLACK_ID }}> Investigate the failures.\n\n${{ env.failed_jobs_summary }}\n\nUse this information to identify specific jobs and repositories. Make sure to anotate proper persons."
                   }
                 }
               ]
