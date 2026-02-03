@@ -1,5 +1,5 @@
 {
-  "lastExecutionTime": "2026-02-03T15:18:10.419Z",
+  "lastExecutionTime": "2026-02-03T15:48:57.649Z",
   "data": [
     {
       "repoName": "tyk-analytics",
@@ -206,10 +206,10 @@
         {
           "id": 62358785493,
           "name": "api-tests (redis6, postgres15, murmur128, not local and not dind and not sql and not nightly, mas...",
-          "status": "in_progress",
-          "conclusion": null,
+          "status": "completed",
+          "conclusion": "success",
           "started_at": "2026-02-03T14:59:51Z",
-          "duration": -1770130791000,
+          "duration": 1652000,
           "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/21634535775/job/62358785493",
           "head_branch": "release-5.11",
           "repo_name": "tyk-analytics",
@@ -218,10 +218,10 @@
         {
           "id": 62358785556,
           "name": "api-tests (redis7, mongo7, sha256, not local and not dind and not nightly, master, $ECR/tyk-pump:...",
-          "status": "in_progress",
-          "conclusion": null,
+          "status": "completed",
+          "conclusion": "success",
           "started_at": "2026-02-03T14:59:27Z",
-          "duration": -1770130767000,
+          "duration": 1628000,
           "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/21634535775/job/62358785556",
           "head_branch": "release-5.11",
           "repo_name": "tyk-analytics",
