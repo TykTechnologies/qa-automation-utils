@@ -88,7 +88,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":robot_face: <@${{ env.OEL_SLACK_ID }}> please use the gh tool (with --status failure flag) to collect logs only from failed jobs and summarize the issue.\nIf logs are too big, try to obtain only the last lines with error. If there are issue with tests - check the commits made in last 24h\n\nFor each failure:\n• Quote the relevant error message\n• Provide 1-2 sentences with a proposed fix\n• Run a separate delegate per project\n• If there are more than 5 failures, analyze only the top 3 most recent failures\n\nIn the answer mark a proper person to act on the issue. To mark a person use <@userid>:\n• Pipeline setup issues → @U02GKE67TQC (Alienor)\n• API test script issues → @${{ env.ILIJA_SLACK_ID }} (Ilija)\n• UI test script issues → @${{ env.LAURENTIU_SLACK_ID }} (Laurentiu)\n• Kubernetes / resilience test issues → @${{ env.BURAK_SLACK_ID }} (Burak) / in case of technical issues mark @U01FJRXU8E6 (Konrad)\n• You have technical issue → @${{ env.LEO_SLACK_ID }} (Leo)"
+                    "text": ":robot_face: <@${{ env.OEL_SLACK_ID }}> Investigate the failures.\n Job ID and Repository for every failure are provided above. Make sure to notify proper assignees."
                   }
                 }
               ]
