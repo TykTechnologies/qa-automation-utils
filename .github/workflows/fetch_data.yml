@@ -67,8 +67,22 @@ jobs:
         with:
           payload: |
             {
-              "text": "⚠️ There are ${{ env.FAILED_COUNT }} failing pipeline jobs!",
               "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": ":robot_face: <@${{ env.OEL_SLACK_ID }}> Investigate the failures.\n\n${{ env.failed_jobs_summary }}\n\nUse this information to identify specific jobs and repositories. Make sure to anotate proper persons."
+                  }
+                },
+                {
+                  "type": "divider"
+                },
+                {
+                    "type": "text",
+                    "text": ""⚠️ There are ${{ env.FAILED_COUNT }} failing pipeline jobs!",
+                    "emoji": true
+                },
                 {
                   "type": "header",
                   "text": { "type": "plain_text", "text": "⚠️ Pipeline failures detected", "emoji": true }
@@ -90,13 +104,7 @@ jobs:
                 {
                   "type": "divider"
                 },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ":robot_face: <@${{ env.OEL_SLACK_ID }}> Investigate the failures.\n\n${{ env.failed_jobs_summary }}\n\nUse this information to identify specific jobs and repositories. Make sure to anotate proper persons."
-                  }
-                }
+                
               ]
             }
         env:
