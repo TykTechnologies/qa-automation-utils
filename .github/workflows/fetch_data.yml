@@ -72,7 +72,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": ":robot_face: <@${{ env.OEL_SLACK_ID }}> Investigate the failures.\n\n${{ env.failed_jobs_summary }}\n\nUse this information to identify specific jobs and repositories. Make sure to anotate proper persons."
+                    "text": ":robot_face: <@${{ env.OEL_SLACK_ID }}> Investigate test pipelines.\n\n${{ env.failed_jobs_summary }}\n\nUse this information to identify specific jobs and repositories. Follow the instructions from Oel/docs/github-actions-debugging.md"
                   }
                 },
                 {
