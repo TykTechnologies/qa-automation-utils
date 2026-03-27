@@ -1,5 +1,5 @@
 {
-  "lastExecutionTime": "2026-03-26T08:14:08.518Z",
+  "lastExecutionTime": "2026-03-27T08:12:11.562Z",
   "data": [
     {
       "repoName": "tyk-analytics",
@@ -30,25 +30,25 @@
           "workflow_file": "release.yml"
         },
         {
-          "id": 68634786841,
+          "id": 68812571937,
           "name": "ui-tests",
           "status": "completed",
           "conclusion": "skipped",
-          "started_at": "2026-03-26T00:36:11Z",
-          "duration": 0,
-          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/23571468508/job/68634786841",
+          "started_at": "2026-03-27T00:36:11Z",
+          "duration": -1000,
+          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/23625106101/job/68812571937",
           "head_branch": "master",
           "repo_name": "tyk-analytics",
           "workflow_file": "nightly-e2e-tests.yml"
         },
         {
-          "id": 68634787945,
+          "id": 68812572001,
           "name": "api-tests",
           "status": "completed",
           "conclusion": "skipped",
-          "started_at": "2026-03-26T00:36:12Z",
-          "duration": 0,
-          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/23571468508/job/68634787945",
+          "started_at": "2026-03-27T00:36:11Z",
+          "duration": -1000,
+          "url": "https://github.com/TykTechnologies/tyk-analytics/actions/runs/23625106101/job/68812572001",
           "head_branch": "master",
           "repo_name": "tyk-analytics",
           "workflow_file": "nightly-e2e-tests.yml"
@@ -522,13 +522,13 @@
       "branch": "master",
       "jobs": [
         {
-          "id": 66985559149,
+          "id": 68712289316,
           "name": "test (1.25, amd64, 18.16)",
           "status": "completed",
-          "conclusion": "failure",
-          "started_at": "2026-03-13T16:31:16Z",
-          "duration": 149000,
-          "url": "https://github.com/TykTechnologies/portal/actions/runs/23060516910/job/66985559149",
+          "conclusion": "success",
+          "started_at": "2026-03-26T13:05:46Z",
+          "duration": 159000,
+          "url": "https://github.com/TykTechnologies/portal/actions/runs/23595857426/job/68712289316",
           "head_branch": "master",
           "repo_name": "portal",
           "workflow_file": "api_tests.yml"
@@ -546,13 +546,13 @@
           "workflow_file": "ui_tests.yml"
         },
         {
-          "id": 66985559181,
+          "id": 68712289364,
           "name": "test (1.25, amd64, 18.16)",
           "status": "completed",
-          "conclusion": "failure",
-          "started_at": "2026-03-13T16:31:16Z",
-          "duration": 2094000,
-          "url": "https://github.com/TykTechnologies/portal/actions/runs/23060516895/job/66985559181",
+          "conclusion": "success",
+          "started_at": "2026-03-26T13:05:46Z",
+          "duration": 2221000,
+          "url": "https://github.com/TykTechnologies/portal/actions/runs/23595857425/job/68712289364",
           "head_branch": "master",
           "repo_name": "portal",
           "workflow_file": "ui_tests_postgres.yml"
