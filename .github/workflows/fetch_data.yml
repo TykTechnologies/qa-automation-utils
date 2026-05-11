@@ -8,27 +8,46 @@ on:
       - master
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
 jobs:
   fetch_data:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     defaults:
       run:
         working-directory: ./docs
     steps:
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@d72941d797fd3113feb6b93fd0dec494b13a2547  # v1
+        with:
+          app-id: ${{ secrets.PROBE_APP_ID }}
+          private-key: ${{ secrets.PROBE_APP_PRIVATE_KEY }}
+          owner: TykTechnologies
+
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020  # v4
         with:
-          node-version: '19'
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
 
       - name: Fetch and save data
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN_GITHUB }}
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
         run: node fetchAndSaveData.js
 
       - name: Check for failed jobs
@@ -39,11 +58,11 @@ jobs:
             # Count failed jobs
             FAILED_COUNT=$(jq '[.data[].jobs[] | select(.conclusion == "failure")] | length' data.json)
             echo "FAILED_COUNT=$FAILED_COUNT" >> $GITHUB_ENV
-            
+
             # Create a file with the failed jobs list for the Slack message
             echo "*Failed Jobs:*\n" > failed_jobs.txt
             jq -r '.data[].jobs[] | select(.conclusion == "failure") | "\n• \(.repo_name)/\(.head_branch): \(.name)\n  Repository: \(.repo_name)\n  Job ID: \(.id)\n  Failed at: \(.started_at) (Duration: \(.duration/1000)s)\n  URL: \(.url)\n  <\(.url)|View Job Details>"' data.json >> failed_jobs.txt
-            
+
             # Create a separate file with just the repository and job ID information for OEL
             echo "Failed Jobs Summary:\n" > failed_jobs_summary.txt
             jq -r '.data[].jobs[] | select(.conclusion == "failure") | "• Repository: \(.repo_name), Job ID: \(.id)"' data.json >> failed_jobs_summary.txt
@@ -63,7 +82,7 @@ jobs:
 
       - name: Notify slack
         if: ${{ env.failed_jobs == 'true' }}
-        uses: slackapi/slack-github-action@v1.24.0
+        uses: slackapi/slack-github-action@37ebaef184d7626c5f204ab8d3baff4262dd30f0  # v1.27.0
         with:
           payload: |
             {
