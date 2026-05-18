@@ -61,7 +61,7 @@ jobs:
 
             # Create a file with the failed jobs list for the Slack message
             echo "*Failed Jobs:*\n" > failed_jobs.txt
-            jq -r '.data[].jobs[] | select(.conclusion == "failure") | "\n• \(.repo_name)/\(.head_branch): \(.name)\n  Repository: \(.repo_name)\n  Job ID: \(.id)\n  Failed at: \(.started_at) (Duration: \(.duration/1000)s)\n  URL: \(.url)\n  <\(.url)|View Job Details>"' data.json >> failed_jobs.txt
+            jq -r '.data[].jobs[] | select(.conclusion == "failure") | "• <\(.url)|\(.repo_name)/\(.head_branch): \(.name | .[0:60])> — Job \(.id) (\(.duration/1000 | floor)s)"' data.json >> failed_jobs.txt
 
             # Create a separate file with just the repository and job ID information for OEL
             echo "Failed Jobs Summary:\n" > failed_jobs_summary.txt
@@ -79,6 +79,14 @@ jobs:
           # Escape special characters for JSON
           FAILED_JOBS=$(cat failed_jobs.txt | sed 's/"/\\"/g' | tr '\n' ' ' | sed 's/  / \\n /g')
           echo "message=$FAILED_JOBS" >> $GITHUB_OUTPUT
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git commit -m "Update data.json [skip ci]" || exit 0
+          git push
 
       - name: Notify slack
         if: ${{ env.failed_jobs == 'true' }}
@@ -132,11 +140,3 @@ jobs:
           LAURENTIU_SLACK_ID: U3QNEPT6K
           BURAK_SLACK_ID: U02P6G92FDJ
           LEO_SLACK_ID: U3P2L4XNE
-
-      - name: Commit and push changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data.json
-          git commit -m "Update data.json [skip ci]" || exit 0
-          git push
