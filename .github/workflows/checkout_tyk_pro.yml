@@ -15,9 +15,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@${{secrets.action_repo_commit_sha}} 
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
 
       - name: Checkout tyk-pro
-        uses: TykTechnologies/github-actions/.github/actions/tests/checkout-tyk-pro@main
+        uses: TykTechnologies/github-actions/.github/actions/tests/checkout-tyk-pro@production
         with:
           org_gh_token: ${{ secrets.ORG_GH_TOKEN }}
