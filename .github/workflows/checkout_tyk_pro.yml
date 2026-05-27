@@ -18,6 +18,6 @@ jobs:
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
 
       - name: Checkout tyk-pro
-        uses: TykTechnologies/github-actions/.github/actions/tests/checkout-tyk-pro@production
+        uses: TykTechnologies/github-actions/.github/actions/tests/checkout-tyk-pro@production_branch
         with:
           org_gh_token: ${{ secrets.ORG_GH_TOKEN }}
