@@ -1,0 +1,23 @@
+name: Checkout tyk-pro
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  checkout_tyk_pro:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5  # v4
+
+      - name: Checkout tyk-pro
+        uses: TykTechnologies/github-actions/.github/actions/tests/checkout-tyk-pro@production
+        with:
+          org_gh_token: ${{ secrets.ORG_GH_TOKEN }}
