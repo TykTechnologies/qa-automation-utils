@@ -61,7 +61,7 @@ jobs:
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
 
       - name: Upload HTML report
-        uses: actions/upload-artifact@ea165fc8d65b6e75b540449e92b4886f43607fa02  # v4
+        uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.image.outputs.artifact_name }}
           path: trivy-report.html
