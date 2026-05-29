@@ -62,13 +62,10 @@ jobs:
 
       - name: Convert HTML report to PDF
         run: |
-          sudo apt-get update -qq
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends chromium-browser
-          chrome="$(command -v chromium-browser || command -v chromium)"
-          "$chrome" --headless=new --disable-gpu --no-sandbox \
-            --no-pdf-header-footer \
-            --print-to-pdf="${GITHUB_WORKSPACE}/trivy-report.pdf" \
-            "file://${GITHUB_WORKSPACE}/trivy-report.html"
+          # wkhtmltopdf is much faster than installing Chromium; Trivy's HTML uses inline CSS/tables only.
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends wkhtmltopdf
+          wkhtmltopdf --enable-local-file-access --quiet --page-size A4 \
+            trivy-report.html trivy-report.pdf
           test -s trivy-report.pdf
 
       - name: Upload reports
