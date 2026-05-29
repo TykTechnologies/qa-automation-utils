@@ -60,11 +60,24 @@ jobs:
           vuln-type: 'os,library'
           severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
 
-      - name: Upload HTML report
+      - name: Convert HTML report to PDF
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends chromium-browser
+          chrome="$(command -v chromium-browser || command -v chromium)"
+          "$chrome" --headless=new --disable-gpu --no-sandbox \
+            --no-pdf-header-footer \
+            --print-to-pdf="${GITHUB_WORKSPACE}/trivy-report.pdf" \
+            "file://${GITHUB_WORKSPACE}/trivy-report.html"
+          test -s trivy-report.pdf
+
+      - name: Upload reports
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.image.outputs.artifact_name }}
-          path: trivy-report.html
+          path: |
+            trivy-report.html
+            trivy-report.pdf
           if-no-files-found: error
           retention-days: 30
 
@@ -74,5 +87,7 @@ jobs:
             echo "### Trivy scan complete"
             echo ""
             echo "- **Image:** \`${{ steps.image.outputs.ref }}\`"
-            echo "- **Report:** download artifact \`${{ steps.image.outputs.artifact_name }}\` (file \`trivy-report.html\`)"
+            echo "- **Report:** download artifact \`${{ steps.image.outputs.artifact_name }}\`"
+            echo "  - \`trivy-report.pdf\`"
+            echo "  - \`trivy-report.html\`"
           } >> "$GITHUB_STEP_SUMMARY"
