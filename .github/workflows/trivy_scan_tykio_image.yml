@@ -1,0 +1,78 @@
+name: Trivy scan tykio images
+
+on:
+  workflow_dispatch:
+    inputs:
+      tykio_image:
+        description: 'tykio image to scan (e.g. tyk-sync:v2.0.0 → scans tykio/tyk-sync:v2.0.0)'
+        required: true
+        type: string
+        default: 'tyk-sync:v2.0.0'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ inputs.tykio_image }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  trivy_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve image reference
+        id: image
+        run: |
+          raw="${{ inputs.tykio_image }}"
+          raw="${raw#tykio/}"
+          raw="${raw// /}"
+          if [[ -z "$raw" ]]; then
+            echo "::error::Image name is required (e.g. tyk-sync:v2.0.0)"
+            exit 1
+          fi
+          if [[ "$raw" != *:* ]]; then
+            echo "::error::Image must include a tag (e.g. tyk-sync:v2.0.0)"
+            exit 1
+          fi
+          ref="tykio/${raw}"
+          echo "ref=${ref}" >> "$GITHUB_OUTPUT"
+          safe_name="${raw//\//-}"
+          safe_name="${safe_name//:/-}"
+          echo "artifact_name=trivy-report-${safe_name}" >> "$GITHUB_OUTPUT"
+          echo "Scanning ${ref}"
+
+      - name: Download HTML report template
+        run: |
+          mkdir -p .trivy
+          curl -fsSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl \
+            -o .trivy/html.tpl
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@57a97c7e7821a5776cebc9bb87c984fa69cba8f1  # v0.35.0
+        with:
+          image-ref: ${{ steps.image.outputs.ref }}
+          scan-type: image
+          format: template
+          template: '@.trivy/html.tpl'
+          output: trivy-report.html
+          exit-code: '0'
+          ignore-unfixed: false
+          vuln-type: 'os,library'
+          severity: 'UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL'
+
+      - name: Upload HTML report
+        uses: actions/upload-artifact@ea165fc8d65b6e75b540449e92b4886f43607fa02  # v4
+        with:
+          name: ${{ steps.image.outputs.artifact_name }}
+          path: trivy-report.html
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Report summary
+        run: |
+          {
+            echo "### Trivy scan complete"
+            echo ""
+            echo "- **Image:** \`${{ steps.image.outputs.ref }}\`"
+            echo "- **Report:** download artifact \`${{ steps.image.outputs.artifact_name }}\` (file \`trivy-report.html\`)"
+          } >> "$GITHUB_STEP_SUMMARY"
