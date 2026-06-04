@@ -1,0 +1,17 @@
+name: Test Branch Suggestions
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, closed]
+  workflow_dispatch:
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  branch-suggestions:
+    uses: TykTechnologies/github-actions/.github/workflows/branch-suggestion.yml@trigger-release-to-releas-branch-after-suggestion
+    secrets:
+      JIRA_READ_AUTH: ${{ secrets.JIRA_READ_AUTH }}
+      JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
