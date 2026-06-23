@@ -3,13 +3,8 @@
         "fileNames": ["release.yml", "nightly-e2e-tests.yml", "k8s-api-tests.yaml", "upgrade-tests.yml"], 
         "branches": [
             "master",
-            "release-5.11",
             "release-5.8",
-            "release-5.8.0",
-            "release-5-lts",
-            "release-5.12",
-            "release-5.13",
-            "release-6.0"
+            "release-5.13"
         ],
         "jobs": [
             "api-tests",
@@ -22,9 +17,8 @@
         "fileNames": ["ui-tests.yml"], 
         "branches": [
             "master",
-            "release-5.11",
             "release-5.8",
-            "release-5-lts"
+            "release-5.13"
         ],
         "jobs": [
             "ui-test"
@@ -34,13 +28,8 @@
         "fileNames": ["release.yml"],
         "branches": [
             "master",
-            "release-5.11",
             "release-5.8",
-            "release-5.8.0",
-            "release-5-lts",
-            "release-5.12",
-            "release-5.13",
-            "release-6.0"
+            "release-5.13"
         ],
         "jobs": [
             "api-tests"
