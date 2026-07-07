@@ -2,7 +2,7 @@ name: Fetch and Save Data
 
 on:
   schedule:
-    - cron: '0 8 * * 1-5' # Every weekday at 8am
+    - cron: '0 5 * * 1-5' # Every weekday at 5am
   push:
     branches:
       - master
