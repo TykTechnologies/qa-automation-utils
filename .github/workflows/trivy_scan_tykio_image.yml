@@ -18,7 +18,8 @@ permissions:
 
 jobs:
   trivy_scan:
-    runs-on: ubuntu-latest
+    # Pinned: Ubuntu 26.04 (ubuntu-latest since Nov 2026) no longer ships wkhtmltopdf.
+    runs-on: ubuntu-24.04
     steps:
       - name: Resolve image reference
         id: image
@@ -44,12 +45,14 @@ jobs:
       - name: Download HTML report template
         run: |
           mkdir -p .trivy
-          curl -fsSL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl \
+          # Template pinned to the Trivy v0.76.2 commit to match the scanner version.
+          curl -fsSL https://raw.githubusercontent.com/aquasecurity/trivy/3f6334d223b52188324af3b9923b4249cd206652/contrib/html.tpl \
             -o .trivy/html.tpl
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25  # v0.36.0
         with:
+          version: v0.76.2
           image-ref: ${{ steps.image.outputs.ref }}
           scan-type: image
           format: template
